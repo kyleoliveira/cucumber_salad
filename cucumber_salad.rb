@@ -2,6 +2,9 @@
 require 'rubygems'
 require 'json'
 
+kuality_dir = '$HOME/kuality'
+number_of_lists = 10
+
 class Array
   def in_groups(num_groups)
     return [] if num_groups == 0
@@ -29,7 +32,7 @@ puts "Read in these tags:\n#{tags}"
 
 tags = Hash[
   tags.map! do |tag|
-    find_result = `find /Users/kco26/RubymineProjects/kuality/kuality-kfs-cu/features -name "*feature" -exec grep -H #{tag} {} \\;`
+    find_result = `find #{kuality_dir}/kuality-kfs-cu/features -name "*feature" -exec grep -H #{tag} {} \\;`
     [ tag, find_result.split("\n").collect {|s| s.split(' ')[1] }.uniq ]
   end
 ]
@@ -50,7 +53,7 @@ puts "Here are our #{number_of_lists} lists:\n#{lists}"
 # Now create threads that run each of these lists in parallel, excluding @nightly-jobs tests
 threads = []
 lists.each do |id, list|
-  threads[id] = spawn 'cucumber /Users/kco26/RubymineProjects/kuality/kuality-kfs-cu/features' <<
+  threads[id] = spawn "cucumber #{kuality_dir}/kuality-kfs-cu/features" <<
                               ' -p master --tags ~@nightly-jobs' <<
                                list.map { |t| " --tags #{t}" }.join('') <<
                               " --format json -o kuality-kfs-cu-output.split#{format('%#02d', id)}.json"
