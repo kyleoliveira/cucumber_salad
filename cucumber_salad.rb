@@ -18,7 +18,7 @@ number_of_lists = 10
 
 tags = []
 begin
-  file = File.new('known_tags.csv', 'r')
+  file = File.new("#{File.dirname(File.readlink(__FILE__))}/known_tags.csv", 'r')
   while (line = file.gets)
     tags << line.chomp
   end
