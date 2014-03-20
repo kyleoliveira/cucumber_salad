@@ -16,6 +16,7 @@ Finally, all the JSON files are merged into a single result file.
 
 #### Requirements
 | Req | Description |
+| --- | ----------- |
 | known_tags.csv | A file listing all grouping tags. If your Scenarios are stratified by speed somehow, use those tags. |
 | 'headless' profile | A Cucumber profile named 'headless'. You can certainly edit this in code. |
 
