@@ -3,13 +3,34 @@ require 'rubygems'
 require 'json'
 
 kuality_dir = '$HOME/kuality'
+kuality_dir = '/Users/kco26/RubymineProjects/kuality'
 number_of_lists = 10
 
 class Array
-  def in_groups(num_groups)
-    return [] if num_groups == 0
-    slice_size = (self.size/Float(num_groups)).ceil
-    self.each_slice(slice_size).to_a
+  def in_groups(number, fill_with = nil)
+    # size / number gives minor group size;
+    # size % number gives how many objects need extra accomodation;
+    # each group hold either division or division + 1 items.
+    division = size / number
+    modulo = size % number
+
+    # create a new array avoiding dup
+    groups = []
+    start = 0
+
+    number.times do |index|
+      length = division + (modulo > 0 && modulo > index ? 1 : 0)
+      padding = fill_with != false &&
+          modulo > 0 && length == division ? 1 : 0
+      groups << slice(start, length).concat([fill_with] * padding)
+      start += length
+    end
+
+    if block_given?
+      groups.each{|g| yield(g) }
+    else
+      groups
+    end
   end
 end
 
@@ -39,14 +60,14 @@ puts "Converted to these lists:\n#{tags}"
 count = 0
 lists = Hash.new
 tags.each do |tag, vals|
-  vals.in_groups(number_of_lists).each do |s|
+  vals.in_groups(number_of_lists, false).each do |s|
     count += 1
     lists[count].nil? ? lists.merge!({count => s.to_a}) : lists[count].push(s.to_a).flatten!
   end
   count = 0
 end
 puts "Here are our #{number_of_lists} lists:\n#{lists}"
-
+exit
 # Now create threads that run each of these lists in parallel, excluding @nightly-jobs tests
 threads = []
 lists.each do |id, list|
