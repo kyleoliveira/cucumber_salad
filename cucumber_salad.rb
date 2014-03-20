@@ -84,7 +84,7 @@ Process.waitall
 
 # Merge all the results
 results = []
-(number_of_lists + 1).times do |x|
+number_of_lists.times do |x|
   results << JSON.parse(File.read("kuality-kfs-cu-output.split#{format('%#02d', number_of_lists)}.json"))
 end
 
