@@ -3,7 +3,6 @@ require 'rubygems'
 require 'json'
 
 kuality_dir = '$HOME/kuality'
-#kuality_dir = '/Users/kco26/RubymineProjects/kuality'
 number_of_lists = 10
 
 class Array
@@ -45,7 +44,6 @@ rescue => err
   puts "Exception: #{err}"
   err
 end
-
 puts "Read in these tags:\n#{tags}"
 
 tags = Hash[
@@ -54,7 +52,6 @@ tags = Hash[
     [ tag, find_result.split("\n").collect {|s| s.split(' ')[1] }.uniq ]
   end
 ]
-
 puts "Converted to these lists:\n#{tags}"
 
 count = 0
@@ -67,7 +64,7 @@ tags.each do |tag, vals|
   count = 0
 end
 puts "Here are our #{number_of_lists} lists:\n#{lists}"
-exit
+
 # Now create threads that run each of these lists in parallel, excluding @nightly-jobs tests
 threads = []
 lists.each do |id, list|
