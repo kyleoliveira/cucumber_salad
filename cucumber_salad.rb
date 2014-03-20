@@ -3,7 +3,7 @@ require 'rubygems'
 require 'json'
 
 kuality_dir = '$HOME/kuality'
-kuality_dir = '/Users/kco26/RubymineProjects/kuality'
+#kuality_dir = '/Users/kco26/RubymineProjects/kuality'
 number_of_lists = 10
 
 class Array
