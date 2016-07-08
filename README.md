@@ -22,3 +22,5 @@ Finally, all the JSON files are merged into a single result file.
 
 #### Caveats
 * You'll need enough memory to run this stuff in parallel, of course.
+* Currently, this must be run from the root directory of your Cucumber project
+ so that the Cucumber processes can find the cucumber.yml file.
